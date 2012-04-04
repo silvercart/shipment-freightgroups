@@ -60,13 +60,16 @@ class SilvercartFreightgroupShippingMethod extends DataObjectDecorator {
      * @since 29.03.2012
      */
     public function updateCMSFields(FieldSet &$fields) {
-        $freightgroupsTable = new SilvercartManyManyComplexTableField(
-                        $this->owner,
-                        'SilvercartFreightgroups',
-                        'SilvercartFreightgroup'
-        );
-        $freightgroupsTable->pageSize = 50;
-        $fields->addFieldToTab("Root.SilvercartFreightgroups", $freightgroupsTable);
+        if ($this->owner->ID) {
+            $freightgroupsTable = new SilvercartManyManyComplexTableField(
+                            $this->owner,
+                            'SilvercartFreightgroups',
+                            'SilvercartFreightgroup'
+            );
+            $freightgroupsTable->pageSize = 50;
+            $fields->findOrMakeTab("Root.SilvercartFreightgroups", $this->owner->fieldLabel('SilvercartFreightgroups'));
+            $fields->addFieldToTab("Root.SilvercartFreightgroups", $freightgroupsTable);
+        }
     }
     
     /**
