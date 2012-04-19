@@ -39,10 +39,12 @@ class SilvercartFreightgroup extends DataObject {
      * @var array
      */
     public static $db = array(
-        'Title'         => 'Varchar(64)',
-        'Description'   => 'Text',
-        'Priority'      => 'Int',
-        'IsDefault'     => 'Boolean',
+        'Title'                             => 'Varchar(64)',
+        'Description'                       => 'Text',
+        'Priority'                          => 'Int',
+        'IsDefault'                         => 'Boolean',
+        'ProductHint'                       => 'Text',
+        'ShowShipmentInfoOnProductDetail'   => 'Boolean',
     );
     
     /**
@@ -94,12 +96,15 @@ class SilvercartFreightgroup extends DataObject {
         $fieldLabels = array_merge(
             parent::fieldLabels($includerelations),
             array(
-                'Title'                     => _t($this->ClassName . '.TITLE'),
-                'Description'               => _t($this->ClassName . '.DESCRIPTION'),
-                'Priority'                  => _t($this->ClassName . '.PRIORITY'),
-                'IsDefault'                 => _t($this->ClassName . '.ISDEFAULT'),
-                'SilvercartProducts'        => _t('SilvercartProduct.PLURALNAME'),
-                'SilvercartShippingMethods' => _t('SilvercartShippingMethod.PLURALNAME'),
+                'Title'                             => _t($this->ClassName . '.TITLE'),
+                'Description'                       => _t($this->ClassName . '.DESCRIPTION'),
+                'Priority'                          => _t($this->ClassName . '.PRIORITY'),
+                'IsDefault'                         => _t($this->ClassName . '.ISDEFAULT'),
+                'ProductHint'                       => _t($this->ClassName . '.PRODUCTHINT'),
+                'ProductHintShort'                  => _t($this->ClassName . '.PRODUCTHINTSHORT'),
+                'ShowShipmentInfoOnProductDetail'   => _t($this->ClassName . '.SHOWSHIPMENTINFOONPRODUCTDETAIL'),
+                'SilvercartProducts'                => _t('SilvercartProduct.PLURALNAME'),
+                'SilvercartShippingMethods'         => _t('SilvercartShippingMethod.PLURALNAME'),
             )
         );
 
@@ -132,6 +137,10 @@ class SilvercartFreightgroup extends DataObject {
             'IsDefault' => array(
                 'title'     => $this->fieldLabel('IsDefault'),
                 'filter'    => 'ExactMatchFilter'
+            ),
+            'ProductHint' => array(
+                'title'     => $this->fieldLabel('ProductHintShort'),
+                'filter'    => 'PartialMatchFilter'
             ),
         );
         $this->extend('updateSearchableFields', $searchableFields);

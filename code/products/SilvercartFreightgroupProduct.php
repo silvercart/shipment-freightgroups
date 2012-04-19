@@ -93,4 +93,23 @@ class SilvercartFreightgroupProduct extends DataObjectDecorator {
         );
     }
     
+    /**
+     * Returns the allowed shipping methods dependant on freightgroup and default
+     * permission criteria of SilvercartShippingMethod
+     *
+     * @return DataObjectSet
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 19.04.2012 
+     */
+    public function getAllowedShippingMethods() {
+        $allowedShippingMethods = null;
+        if ($this->owner->SilvercartFreightgroupID) {
+            $freightgroup = $this->owner->SilvercartFreightgroup();
+            $shippingMethods        = $freightgroup->SilvercartShippingMethods();
+            $allowedShippingMethods = SilvercartShippingMethod::filterShippingMethods($shippingMethods);
+        }
+        return $allowedShippingMethods;
+    }
+    
 }

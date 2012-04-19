@@ -40,4 +40,8 @@ $lang['en_US']['SilvercartFreightgroup']['SINGULARNAME']                        
 $lang['en_US']['SilvercartFreightgroup']['DESCRIPTION']                         = 'Description';
 $lang['en_US']['SilvercartFreightgroup']['ISDEFAULT']                           = 'Is default';
 $lang['en_US']['SilvercartFreightgroup']['PRIORITY']                            = 'Priority';
+$lang['en_US']['SilvercartFreightgroup']['PRODUCTHINT']                         = 'Hint to display inside a related products detail data';
+$lang['en_US']['SilvercartFreightgroup']['PRODUCTHINTSHORT']                    = 'Product hint';
+$lang['en_US']['SilvercartFreightgroup']['SHIPMENTINFO']                        = 'Shipment information';
+$lang['en_US']['SilvercartFreightgroup']['SHOWSHIPMENTINFOONPRODUCTDETAIL']     = 'Show shipment information on a products detail page?';
 $lang['en_US']['SilvercartFreightgroup']['TITLE']                               = 'Name';
