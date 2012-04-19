@@ -59,8 +59,8 @@ class SilvercartFreightgroupProductPlugin extends DataObjectDecorator {
                     'Name'      => $name,
                     'Content'   => $content,
                 );
+                $pluggedInTab = new DataObject($data);
             }
-            $pluggedInTab = new DataObject($data);
         }
         return $pluggedInTab;
     }
