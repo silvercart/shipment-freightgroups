@@ -45,3 +45,6 @@ $lang['de_DE']['SilvercartFreightgroup']['PRODUCTHINTSHORT']                    
 $lang['de_DE']['SilvercartFreightgroup']['SHIPMENTINFO']                        = 'Versandinformationen';
 $lang['de_DE']['SilvercartFreightgroup']['SHOWSHIPMENTINFOONPRODUCTDETAIL']     = 'Versandinformationen an den Details eines verknüpften Artikels anzeigen?';
 $lang['de_DE']['SilvercartFreightgroup']['TITLE']                               = 'Name';
+
+$lang['de_DE']['SilvercartFreightgroupLanguage']['PLURALNAME']                  = _t('Silvercart.TRANSLATIONS');
+$lang['de_DE']['SilvercartFreightgroupLanguage']['SINGULARNAME']                = _t('Silvercart.TRANSLATION');

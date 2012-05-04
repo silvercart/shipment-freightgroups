@@ -39,11 +39,8 @@ class SilvercartFreightgroup extends DataObject {
      * @var array
      */
     public static $db = array(
-        'Title'                             => 'Varchar(64)',
-        'Description'                       => 'Text',
         'Priority'                          => 'Int',
         'IsDefault'                         => 'Boolean',
-        'ProductHint'                       => 'Text',
         'ShowShipmentInfoOnProductDetail'   => 'Boolean',
     );
     
@@ -53,7 +50,8 @@ class SilvercartFreightgroup extends DataObject {
      * @var array
      */
     public static $has_many = array(
-        'SilvercartProducts'    => 'SilvercartProduct',
+        'SilvercartFreightgroupLanguages'   => 'SilvercartFreightgroupLanguage',
+        'SilvercartProducts'                => 'SilvercartProduct',
     );
     
     /**
@@ -71,6 +69,9 @@ class SilvercartFreightgroup extends DataObject {
      * @var array
      */
     public static $casting = array(
+        'Title'             => 'Text',
+        'Description'       => 'Text',
+        'ProductHint'       => 'Text',
         'IsDefaultString'   => 'Text',
     );
 
@@ -81,6 +82,42 @@ class SilvercartFreightgroup extends DataObject {
      * @var string
      */
     public static $default_sort = "`SilvercartFreightgroup`.`Priority` ASC";
+    
+    /**
+     * Returns the title dependant on the current language
+     *
+     * @return string
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 04.05.2012
+     */
+    public function getTitle() {
+        return $this->getLanguageFieldValue('Title');
+    }
+    
+    /**
+     * Returns the Description dependant on the current language
+     *
+     * @return string
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 04.05.2012
+     */
+    public function getDescription() {
+        return $this->getLanguageFieldValue('Description');
+    }
+    
+    /**
+     * Returns the ProductHint dependant on the current language
+     *
+     * @return string
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 04.05.2012
+     */
+    public function getProductHint() {
+        return $this->getLanguageFieldValue('ProductHint');
+    }
 
     /**
      * Field labels for display in tables.
@@ -103,6 +140,7 @@ class SilvercartFreightgroup extends DataObject {
                 'ProductHint'                       => _t($this->ClassName . '.PRODUCTHINT'),
                 'ProductHintShort'                  => _t($this->ClassName . '.PRODUCTHINTSHORT'),
                 'ShowShipmentInfoOnProductDetail'   => _t($this->ClassName . '.SHOWSHIPMENTINFOONPRODUCTDETAIL'),
+                'SilvercartFreightgroupLanguages'   => _t('SilvercartFreightgroupLanguage.PLURALNAME'),
                 'SilvercartProducts'                => _t('SilvercartProduct.PLURALNAME'),
                 'SilvercartShippingMethods'         => _t('SilvercartShippingMethod.PLURALNAME'),
             )
@@ -110,6 +148,39 @@ class SilvercartFreightgroup extends DataObject {
 
         $this->extend('updateFieldLabels', $fieldLabels);
         return $fieldLabels;
+    }
+    
+    /**
+     * Customized CMS fields
+     * 
+     * @param array $params Optional params to manuipulate the scaffolding behaviour
+     *
+     * @return FieldSet
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 04.05.2012
+     */
+    public function getCMSFields($params = null) {
+        $fields = parent::getCMSFields($params);
+        
+        $languageFields = SilvercartLanguageHelper::prepareCMSFields($this->getLanguage());
+        foreach ($languageFields as $languageField) {
+            $fields->insertBefore($languageField, 'Priority');
+        }
+        return $fields;
+    }
+
+    /**
+     * Returns the translated plural name of the object. If no translation exists
+     * the class name will be returned.
+     * 
+     * @return string the objects plural name
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 04.05.2012
+     */
+    public function plural_name() {
+        return SilvercartTools::plural_name_for($this);
     }
 
     /**
@@ -122,11 +193,11 @@ class SilvercartFreightgroup extends DataObject {
      */
     public function searchableFields() {
         $searchableFields = array(
-            'Title' => array(
+            'SilvercartFreightgroupLanguages.Title' => array(
                 'title'     => $this->fieldLabel('Title'),
                 'filter'    => 'PartialMatchFilter'
             ),
-            'Description' => array(
+            'SilvercartFreightgroupLanguages.Description' => array(
                 'title'     => $this->fieldLabel('Description'),
                 'filter'    => 'PartialMatchFilter'
             ),
@@ -138,13 +209,26 @@ class SilvercartFreightgroup extends DataObject {
                 'title'     => $this->fieldLabel('IsDefault'),
                 'filter'    => 'ExactMatchFilter'
             ),
-            'ProductHint' => array(
+            'SilvercartFreightgroupLanguages.ProductHint' => array(
                 'title'     => $this->fieldLabel('ProductHintShort'),
                 'filter'    => 'PartialMatchFilter'
             ),
         );
         $this->extend('updateSearchableFields', $searchableFields);
         return $searchableFields;
+    }
+    
+    /**
+     * Returns the translated singular name of the object. If no translation exists
+     * the class name will be returned.
+     * 
+     * @return string The objects singular name 
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 04.05.2012
+     */
+    public function singular_name() {
+        return SilvercartTools::singular_name_for($this);
     }
 
     /**
