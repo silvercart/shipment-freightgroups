@@ -152,7 +152,8 @@ class SilvercartFreightgroupShippingMethod extends DataObjectDecorator {
                     "",
                     "`SilvercartFreightgroup`.`Priority` ASC"
             );
-            if ($positions->Count() > 0) {
+            if ($positions->Count() > 0 &&
+                $freightgroups) {
                 foreach ($freightgroups as $freightgroup) {
                     foreach ($positions as $position) {
                         if ($position->SilvercartProduct()->SilvercartFreightgroupID == $freightgroup->ID) {
