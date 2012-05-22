@@ -60,18 +60,13 @@ class SilvercartFreightgroupProduct extends DataObjectDecorator {
      * @since 16.03.2012
      */
     public function updateCMSFields(FieldSet &$fields) {
-        if (SilvercartConfig::DisplayTypeOfProductAdminFlat()) {
-            $tabPath = 'Root.Main';
-        } else {
-            $tabPath = 'Root.Main.Content';
-        }
         $SilvercartFreightgroupsMap = array();
         $SilvercartFreightgroups    = DataObject::get('SilvercartFreightgroup', "", "`SilvercartFreightgroup`.`IsDefault` DESC");
         if ($SilvercartFreightgroups) {
             $SilvercartFreightgroupsMap = $SilvercartFreightgroups->map();
         }
         $freightgroupField = new DropdownField('SilvercartFreightgroupID', $this->owner->fieldLabel('SilvercartFreightgroup'), $SilvercartFreightgroupsMap);
-        $fields->addFieldToTab($tabPath, $freightgroupField);
+        $fields->insertAfter($freightgroupField, 'SilvercartManufacturerID');
     }
     
     /**
