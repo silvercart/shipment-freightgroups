@@ -163,7 +163,7 @@ class SilvercartFreightgroup extends DataObject {
     public function getCMSFields($params = null) {
         $fields = parent::getCMSFields($params);
         
-        $languageFields = SilvercartLanguageHelper::prepareCMSFields($this->getLanguage());
+        $languageFields = SilvercartLanguageHelper::prepareCMSFields($this->getLanguage(true));
         foreach ($languageFields as $languageField) {
             $fields->insertBefore($languageField, 'Priority');
         }
