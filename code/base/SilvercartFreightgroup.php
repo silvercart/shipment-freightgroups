@@ -167,6 +167,19 @@ class SilvercartFreightgroup extends DataObject {
         foreach ($languageFields as $languageField) {
             $fields->insertBefore($languageField, 'Priority');
         }
+        
+        $productsField = $fields->dataFieldByName('SilvercartProducts');
+        $productsField->setPageSize(30);
+        $productsField->setPermissions(array());
+        
+        $shippingMethodsField = new SilvercartManyManyComplexTableField(
+                $this->owner,
+                'SilvercartShippingMethods',
+                'SilvercartShippingMethod'
+        );
+        $shippingMethodsField->setPageSize(30);
+        $fields->addFieldToTab('Root.SilvercartShippingMethods', $shippingMethodsField);
+        
         return $fields;
     }
 
