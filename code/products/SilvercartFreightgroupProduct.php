@@ -107,4 +107,30 @@ class SilvercartFreightgroupProduct extends DataObjectDecorator {
         return $allowedShippingMethods;
     }
     
+    /**
+     * Returns the allowed shipping fees dependant on freightgroup, country and
+     * customer group
+     * 
+     * @param SilvercartCountry $country       Country to get fee for
+     * @param Group             $customerGroup Customer group to get fee for
+     *
+     * @return DataObjectSet
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 09.11.2012 
+     */
+    public function getAllowedShippingFeesFor(SilvercartCountry $country, Group $customerGroup) {
+        $allowedShippingFees = new DataObjectSet();
+        if ($this->owner->SilvercartFreightgroupID) {
+            $freightgroup   = $this->owner->SilvercartFreightgroup();
+            $shippingFees   = SilvercartShippingMethod::getAllowedShippingFeesFor($this->owner, $country, $customerGroup);
+            foreach ($shippingFees as $shippingFee) {
+                if ($freightgroup->SilvercartShippingMethods()->find('ID', $shippingFee->SilvercartShippingMethodID)) {
+                    $allowedShippingFees->push($shippingFee);
+                }
+            }
+        }
+        return $allowedShippingFees;
+    }
+    
 }
