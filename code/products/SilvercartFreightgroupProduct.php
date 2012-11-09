@@ -133,4 +133,32 @@ class SilvercartFreightgroupProduct extends DataObjectDecorator {
         return $allowedShippingFees;
     }
     
+    /**
+     * Returns the lowest shipping fee dependant on freightgroup, country and
+     * customer group
+     * 
+     * @param SilvercartCountry $country       Country to get fee for
+     * @param Group             $customerGroup Customer group to get fee for
+     *
+     * @return DataObjectSet
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 09.11.2012 
+     */
+    public function getLowestShippingFeeFor(SilvercartCountry $country, Group $customerGroup) {
+        $allowedShippingFees    = $this->getAllowedShippingFeesFor($country, $customerGroup);
+        $lowestShippingFee      = null;
+        if ($allowedShippingFees->Count() > 0) {
+            foreach ($allowedShippingFees as $shippingFee) {
+                if (!$shippingFee->PostPricing) {
+                    if (is_null($lowestShippingFee) ||
+                        $lowestShippingFee->PriceAmount > $shippingFee->PriceAmount) {
+                        $lowestShippingFee = $shippingFee;
+                    }
+                }
+            }
+        }
+        return $lowestShippingFee;
+    }
+    
 }
