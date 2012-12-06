@@ -68,6 +68,23 @@ class SilvercartFreightgroupProduct extends DataObjectDecorator {
         $freightgroupField = new DropdownField('SilvercartFreightgroupID', $this->owner->fieldLabel('SilvercartFreightgroup'), $SilvercartFreightgroupsMap);
         $fields->insertAfter($freightgroupField, 'SilvercartManufacturerID');
     }
+
+    /**
+     * Updates the searchable fields
+     *
+     * @param FieldSet &$fields Fields to update
+     *
+     * @return void
+     *
+     * @author Sascha Koehler <skoehler@pixeltricks.de>
+     * @since 06.12.2012
+     */
+    public function updateSearchableFields(FieldSet &$fields) {
+        $fields['SilvercartFreightgroup.ID'] = array(
+            'title'     => _t('SilvercartFreightgroup.SINGULARNAME'),
+            'filter'    => 'ExactMatchFilter'
+        );
+    }
     
     /**
      * Updates the field labels
