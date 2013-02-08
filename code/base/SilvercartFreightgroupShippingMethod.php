@@ -134,7 +134,7 @@ class SilvercartFreightgroupShippingMethod extends DataObjectDecorator {
     /**
      * Updates the allowed shipping methods
      *
-     * @param type &$allowedShippingMethods Allowed shipping methods to update
+     * @param DataObjectSet &$allowedShippingMethods Allowed shipping methods to update
      * 
      * @return void
      *
@@ -174,6 +174,34 @@ class SilvercartFreightgroupShippingMethod extends DataObjectDecorator {
                             $allowedShippingMethods->remove($shippingMethod);
                         }
                     }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Updates the allowed shipping fees for the given product
+     *
+     * @param DataObjectSet     &$allowedShippingMethods Allowed shipping methods to update
+     * @param SilvercartProduct $product                 Product to check fees for
+     * 
+     * @return void
+     *
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 08.02.2013
+     */
+    public function updateAllowedShippingFeesFor(&$allowedShippingMethods, $product) {
+        $freightgroup               = $product->SilvercartFreightgroup();
+        $shippingMethodsToRemove    = array();
+        if ($freightgroup) {
+            foreach ($allowedShippingMethods as $allowedShippingMethod) {
+                if (!$allowedShippingMethod->SilvercartFreightgroups()->find('ID', $freightgroup->ID)) {
+                    $shippingMethodsToRemove[] = $allowedShippingMethod;
+                }
+            }
+            if (count($shippingMethodsToRemove) < $allowedShippingMethods->Count()) {
+                foreach ($shippingMethodsToRemove as $shippingMethod) {
+                    $allowedShippingMethods->remove($shippingMethod);
                 }
             }
         }
