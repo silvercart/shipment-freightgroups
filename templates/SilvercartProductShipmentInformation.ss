@@ -29,7 +29,7 @@
                             <% end_control %>
                         <% end_control %>
                     </td>
-                    <td class="align_right align_top">$PriceFormatted <% if PostPricing %>*<% end_if %></td>
+                    <td class="align_right align_top">$PriceFormattedForDetailViewProduct <% if PostPricing %>*<% end_if %></td>
                 </tr>
                 <% end_control %>
             </table>
