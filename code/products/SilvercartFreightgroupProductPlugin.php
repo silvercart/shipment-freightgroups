@@ -56,7 +56,7 @@ class SilvercartFreightgroupProductPlugin extends DataObjectDecorator {
             }
             if (!empty($content)) {
                 $data = array(
-                    'Name'      => $name,
+                    'Name'      => '<strong>' . $name . '</strong>',
                     'Content'   => $content,
                 );
                 $pluggedInTab = new DataObject($data);
