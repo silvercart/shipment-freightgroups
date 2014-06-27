@@ -7,6 +7,7 @@
             <% if Description %>
                 $Description
             <% end_if %>
+            <% if DeliveryTime %><br/><small class="delivery-time-hint">$fieldLabel(DeliveryTime): {$getDeliveryTime(true)}</small><% end_if %>
             <table class="full silvercart-default-table">
                 <colgroup>
                     <col width="20%"></col>
@@ -28,6 +29,7 @@
                                 <% end_if %>
                             <% end_control %>
                         <% end_control %>
+                        <% if DeliveryTime %><br/><small class="delivery-time-hint">$fieldLabel(DeliveryTime): {$getDeliveryTime(true)}</small><% end_if %>
                     </td>
                     <td class="align_right align_top">$PriceFormattedForDetailViewProduct <% if PostPricing %>*<% end_if %></td>
                 </tr>
