@@ -31,7 +31,7 @@
  * @since 28.03.2012
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-class SilvercartFreightgroupProductPlugin extends DataObjectDecorator {
+class SilvercartFreightgroupProductPlugin extends DataExtension {
     
     /**
      * Adds a tab for shipment information

@@ -31,44 +31,37 @@
  * @since 28.03.2012
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-class SilvercartFreightgroupShippingMethod extends DataObjectDecorator {
+class SilvercartFreightgroupShippingMethod extends DataExtension {
     
     /**
-     * Extra statics
+     * belongs_many_many relations
      *
-     * @return void
-     *
-     * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 28.03.2012 
+     * @var array
      */
-    public function extraStatics() {
-        return array(
-            'belongs_many_many' => array(
-                'SilvercartFreightgroups'   => 'SilvercartFreightgroup',
-            ),
-        );
-    }
+    private static $belongs_many_many = array(
+        'SilvercartFreightgroups' => 'SilvercartFreightgroup',
+    );
     
     /**
      * Updates the CMS fields
      *
-     * @param FieldSet &$fields Fields to update
+     * @param FieldList $fields Fields to update
      * 
      * @return void
      *
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 29.03.2012
      */
-    public function updateCMSFields(FieldSet &$fields) {
+    public function updateCMSFields(FieldList $fields) {
         if ($this->owner->ID) {
-            $freightgroupsTable = new SilvercartManyManyComplexTableField(
-                            $this->owner,
-                            'SilvercartFreightgroups',
-                            'SilvercartFreightgroup'
+            $freightgroupsTable = new GridField(
+                    'SilvercartFreightgroups',
+                    $this->owner->fieldLabel('SilvercartFreightgroups'),
+                    $this->owner->SilvercartFreightgroups(),
+                    SilvercartGridFieldConfig_RelationEditor::create()
             );
-            $freightgroupsTable->pageSize = 50;
-            $fields->findOrMakeTab("Root.SilvercartFreightgroups", $this->owner->fieldLabel('SilvercartFreightgroups'));
-            $fields->addFieldToTab("Root.SilvercartFreightgroups", $freightgroupsTable);
+            $fields->findOrMakeTab('Root.SilvercartFreightgroups', $this->owner->fieldLabel('SilvercartFreightgroups'));
+            $fields->addFieldToTab('Root.SilvercartFreightgroups', $freightgroupsTable);
         }
     }
     
@@ -134,24 +127,20 @@ class SilvercartFreightgroupShippingMethod extends DataObjectDecorator {
     /**
      * Updates the allowed shipping methods
      *
-     * @param DataObjectSet &$allowedShippingMethods Allowed shipping methods to update
+     * @param SS_List $allowedShippingMethods Allowed shipping methods to update
      * 
      * @return void
      *
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 28.03.2012
      */
-    public function updateAllowedShippingMethods(&$allowedShippingMethods) {
+    public function updateAllowedShippingMethods(SS_List $allowedShippingMethods) {
         if (Member::currentUser()) {
             $shippingMethodsToRemove    = array();
             $freightgroupToUse          = false;
             $cart                       = Member::currentUser()->SilvercartShoppingCart();
             $positions                  = $cart->SilvercartShoppingCartPositions();
-            $freightgroups              = DataObject::get(
-                    "SilvercartFreightgroup",
-                    "",
-                    "`SilvercartFreightgroup`.`Priority` ASC"
-            );
+            $freightgroups              = SilvercartFreightgroup::get()->sort('Priority', 'ASC');
             if ($positions->Count() > 0 &&
                 $freightgroups) {
                 foreach ($freightgroups as $freightgroup) {
@@ -182,7 +171,7 @@ class SilvercartFreightgroupShippingMethod extends DataObjectDecorator {
     /**
      * Updates the allowed shipping fees for the given product
      *
-     * @param DataObjectSet     &$allowedShippingMethods Allowed shipping methods to update
+     * @param SS_List           $allowedShippingMethods Allowed shipping methods to update
      * @param SilvercartProduct $product                 Product to check fees for
      * 
      * @return void
@@ -190,7 +179,7 @@ class SilvercartFreightgroupShippingMethod extends DataObjectDecorator {
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 08.02.2013
      */
-    public function updateAllowedShippingFeesFor(&$allowedShippingMethods, $product) {
+    public function updateAllowedShippingFeesFor(SS_List $allowedShippingMethods, $product) {
         $freightgroup               = $product->SilvercartFreightgroup();
         $shippingMethodsToRemove    = array();
         if ($freightgroup) {

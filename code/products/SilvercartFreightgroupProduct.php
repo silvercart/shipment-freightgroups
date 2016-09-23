@@ -31,38 +31,31 @@
  * @since 28.03.2012
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-class SilvercartFreightgroupProduct extends DataObjectDecorator {
+class SilvercartFreightgroupProduct extends DataExtension {
     
     /**
-     * Extra statics
+     * has_one relations
      *
-     * @return void
-     *
-     * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 28.03.2012 
+     * @var array
      */
-    public function extraStatics() {
-        return array(
-            'has_one' => array(
-                'SilvercartFreightgroup'    => 'SilvercartFreightgroup',
-            ),
-        );
-    }
+    private static $has_one = array(
+        'SilvercartFreightgroup' => 'SilvercartFreightgroup',
+    );
     
     /**
      * Updates the CMS fields
      *
-     * @param FieldSet &$fields Fields to update
+     * @param FieldList $fields Fields to update
      * 
      * @return void
      *
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 16.03.2012
      */
-    public function updateCMSFields(FieldSet &$fields) {
+    public function updateCMSFields(FieldList $fields) {
         $SilvercartFreightgroupsMap = array();
-        $SilvercartFreightgroups    = DataObject::get('SilvercartFreightgroup', "", "`SilvercartFreightgroup`.`IsDefault` DESC");
-        if ($SilvercartFreightgroups) {
+        $SilvercartFreightgroups    = SilvercartFreightgroup::get()->sort('IsDefault', 'DESC');
+        if ($SilvercartFreightgroups->exists()) {
             $SilvercartFreightgroupsMap = $SilvercartFreightgroups->map();
         }
         $freightgroupField = new DropdownField('SilvercartFreightgroupID', $this->owner->fieldLabel('SilvercartFreightgroup'), $SilvercartFreightgroupsMap);
@@ -72,14 +65,14 @@ class SilvercartFreightgroupProduct extends DataObjectDecorator {
     /**
      * Updates the searchable fields
      *
-     * @param FieldSet &$fields Fields to update
+     * @param FieldList $fields Fields to update
      *
      * @return void
      *
-     * @author Sascha Koehler <skoehler@pixeltricks.de>
-     * @since 06.12.2012
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 07.07.2016
      */
-    public function updateSearchableFields(FieldSet &$fields) {
+    public function updateSearchableFields(FieldList $fields) {
         $fields['SilvercartFreightgroup.ID'] = array(
             'title'     => _t('SilvercartFreightgroup.SINGULARNAME'),
             'filter'    => 'ExactMatchFilter'
@@ -109,7 +102,7 @@ class SilvercartFreightgroupProduct extends DataObjectDecorator {
      * Returns the allowed shipping methods dependant on freightgroup and default
      * permission criteria of SilvercartShippingMethod
      *
-     * @return DataObjectSet
+     * @return ArrayList
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 19.04.2012 
@@ -131,13 +124,13 @@ class SilvercartFreightgroupProduct extends DataObjectDecorator {
      * @param SilvercartCountry $country       Country to get fee for
      * @param Group             $customerGroup Customer group to get fee for
      *
-     * @return DataObjectSet
+     * @return ArrayList
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 09.11.2012 
      */
     public function getAllowedShippingFeesFor(SilvercartCountry $country, Group $customerGroup) {
-        $allowedShippingFees = new DataObjectSet();
+        $allowedShippingFees = new ArrayList();
         if ($this->owner->SilvercartFreightgroupID) {
             $freightgroup   = $this->owner->SilvercartFreightgroup();
             $shippingFees   = SilvercartShippingMethod::getAllowedShippingFeesFor($this->owner, $country, $customerGroup);
@@ -157,7 +150,7 @@ class SilvercartFreightgroupProduct extends DataObjectDecorator {
      * @param SilvercartCountry $country       Country to get fee for
      * @param Group             $customerGroup Customer group to get fee for
      *
-     * @return DataObjectSet
+     * @return SilvercartShippingFee
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 09.11.2012 

@@ -31,7 +31,7 @@
  * @since 19.04.2012
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-class SilvercartFreightgroupShoppingCartPositionPlugin extends DataObjectDecorator {
+class SilvercartFreightgroupShoppingCartPositionPlugin extends DataExtension {
 
     /**
      * This method will add a string to SilvercartShoppingCartPosition's method 

@@ -81,7 +81,7 @@ class SilvercartFreightgroup extends DataObject {
      *
      * @var string
      */
-    public static $default_sort = "`SilvercartFreightgroup`.`Priority` ASC";
+    public static $default_sort = "SilvercartFreightgroup.Priority ASC";
     
     /**
      * Returns the title dependant on the current language
@@ -155,7 +155,7 @@ class SilvercartFreightgroup extends DataObject {
      * 
      * @param array $params Optional params to manuipulate the scaffolding behaviour
      *
-     * @return FieldSet
+     * @return FieldList
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 04.05.2012
@@ -173,12 +173,13 @@ class SilvercartFreightgroup extends DataObject {
             $productsField->setPageSize(30);
             $productsField->setPermissions(array());
 
-            $shippingMethodsField = new SilvercartManyManyComplexTableField(
-                    $this->owner,
+            $shippingMethodsField = new GridField(
                     'SilvercartShippingMethods',
-                    'SilvercartShippingMethod'
+                    $this->fieldLabel('SilvercartShippingMethods'),
+                    $this->SilvercartShippingMethods(),
+                    SilvercartGridFieldConfig_RelationEditor::create()
             );
-            $shippingMethodsField->setPageSize(30);
+            $fields->findOrMakeTab('Root.SilvercartShippingMethods', $this->fieldLabel('SilvercartShippingMethods'));
             $fields->addFieldToTab('Root.SilvercartShippingMethods', $shippingMethodsField);
         }
         
@@ -290,15 +291,15 @@ class SilvercartFreightgroup extends DataObject {
                 }
                 $query = sprintf(
                         "UPDATE
-                            `SilvercartFreightgroup`
+                            SilvercartFreightgroup
                         SET
-                            `SilvercartFreightgroup`.`Priority` = `SilvercartFreightgroup`.`Priority` %s 1
+                            SilvercartFreightgroup.Priority = SilvercartFreightgroup.Priority %s 1
                         WHERE
-                            `SilvercartFreightgroup`.`Priority` %s %s
+                            SilvercartFreightgroup.Priority %s %s
                         AND
-                            `SilvercartFreightgroup`.`Priority` %s %s
+                            SilvercartFreightgroup.Priority %s %s
                         AND
-                            `SilvercartFreightgroup`.`ID` != %s",
+                            SilvercartFreightgroup.ID != %s",
                         $incrementOrDecrement,
                         $operator,
                         $this->Priority,
@@ -312,11 +313,11 @@ class SilvercartFreightgroup extends DataObject {
                 $this->IsDefault) {
                 $query = sprintf(
                         "UPDATE
-                            `SilvercartFreightgroup`
+                            SilvercartFreightgroup
                         SET
-                            `SilvercartFreightgroup`.`IsDefault` = 0
+                            SilvercartFreightgroup.IsDefault = 0
                         WHERE
-                            `SilvercartFreightgroup`.`ID` != %s",
+                            SilvercartFreightgroup.ID != %s",
                         $this->ID
                 );
                 DB::query($query);
@@ -338,9 +339,9 @@ class SilvercartFreightgroup extends DataObject {
             if (!$this->Priority > 0) {
                 $lowest = DataObject::get_one(
                         $this->ClassName,
-                        "`SilvercartFreightgroup`.`Priority` > 0",
+                        "SilvercartFreightgroup.Priority > 0",
                         true,
-                        "`SilvercartFreightgroup`.`Priority` DESC"
+                        "SilvercartFreightgroup.Priority DESC"
                 );
                 if ($lowest) {
                     $this->Priority = $lowest->Priority + 1;
