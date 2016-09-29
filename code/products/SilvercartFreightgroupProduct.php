@@ -65,14 +65,14 @@ class SilvercartFreightgroupProduct extends DataExtension {
     /**
      * Updates the searchable fields
      *
-     * @param FieldList $fields Fields to update
+     * @param array $fields Fields to update
      *
      * @return void
      *
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 07.07.2016
      */
-    public function updateSearchableFields(FieldList $fields) {
+    public function updateSearchableFields($fields) {
         $fields['SilvercartFreightgroup.ID'] = array(
             'title'     => _t('SilvercartFreightgroup.SINGULARNAME'),
             'filter'    => 'ExactMatchFilter'
