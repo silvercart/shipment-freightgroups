@@ -1,0 +1,21 @@
+---
+Name: silvercart-freightgroup-extensions
+---
+SilvercartProduct:
+  extensions:
+    ['SilvercartFreightgroupProduct']
+SilvercartProductPluginProvider:
+  extensions:
+    ['SilvercartFreightgroupProductPlugin']
+SilvercartShippingMethod:
+  extensions:
+    ['SilvercartFreightgroupShippingMethod']
+SilvercartShoppingCartPositionPluginProvider:
+  extensions:
+    ['SilvercartFreightgroupShoppingCartPositionPlugin']
+SilvercartFreightgroupLanguage:
+  extensions:
+    ['SilvercartLanguageDecorator']
+SilvercartFreightgroup:
+  extensions:
+    ['SilvercartDataObjectMultilingualDecorator']

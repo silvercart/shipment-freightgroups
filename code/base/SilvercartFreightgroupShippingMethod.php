@@ -202,11 +202,14 @@ class SilvercartFreightgroupShippingMethod extends DataExtension {
      * @return string
      *
      * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 28.03.2012 
+     * @since 16.02.2017
      */
     public function getSilvercartFreightgroupsAsString() {
         $silvercartFreightgroupsAsString    = '---';
         $silvercartFreightgroupsAsArray     = $this->owner->SilvercartFreightgroups()->map();
+        if ($silvercartFreightgroupsAsArray instanceof SS_Map) {
+            $silvercartFreightgroupsAsArray = $silvercartFreightgroupsAsArray->toArray();
+        }
         if (count($silvercartFreightgroupsAsArray) > 0) {
             $silvercartFreightgroupsAsString = implode(',', $silvercartFreightgroupsAsArray);
         }

@@ -20,13 +20,3 @@
  * @subpackage Config
  * @ignore 
  */
-
-// Register Extensions
-Object::add_extension('SilvercartProduct',                              'SilvercartFreightgroupProduct');
-Object::add_extension('SilvercartProductPluginProvider',                'SilvercartFreightgroupProductPlugin');
-Object::add_extension('SilvercartShippingMethod',                       'SilvercartFreightgroupShippingMethod');
-Object::add_extension('SilvercartShoppingCartPositionPluginProvider',   'SilvercartFreightgroupShoppingCartPositionPlugin');
-// DataObject Translations
-Object::add_extension('SilvercartFreightgroupLanguage',                 'SilvercartLanguageDecorator');
-// Translatable DataObjects
-Object::add_extension('SilvercartFreightgroup',                         'SilvercartDataObjectMultilingualDecorator');

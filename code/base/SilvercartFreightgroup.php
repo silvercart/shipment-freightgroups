@@ -152,27 +152,16 @@ class SilvercartFreightgroup extends DataObject {
     
     /**
      * Customized CMS fields
-     * 
-     * @param array $params Optional params to manuipulate the scaffolding behaviour
      *
      * @return FieldList
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 04.05.2012
+     * @since 16.02.2017
      */
-    public function getCMSFields($params = null) {
-        $fields = parent::getCMSFields($params);
-        
-        $languageFields = SilvercartLanguageHelper::prepareCMSFields($this->getLanguage(true));
-        foreach ($languageFields as $languageField) {
-            $fields->insertBefore($languageField, 'Priority');
-        }
+    public function getCMSFields() {
+        $fields = SilvercartDataObject::getCMSFields($this, 'CanBeUsedForFilterWidget', false);
         
         if ($this->isInDB()) {
-            $productsField = $fields->dataFieldByName('SilvercartProducts');
-            $productsField->setPageSize(30);
-            $productsField->setPermissions(array());
-
             $shippingMethodsField = new GridField(
                     'SilvercartShippingMethods',
                     $this->fieldLabel('SilvercartShippingMethods'),

@@ -1,0 +1,17 @@
+de:
+  SilvercartFreightgroup:
+    PLURALNAME: 'Frachtgruppen'
+    SINGULARNAME: 'Frachtgruppe'
+    DESCRIPTION: 'Beschreibung'
+    ISDEFAULT: 'Ist Standard'
+    PRIORITY: 'Priorität'
+    PRODUCTHINT: 'Hinweis zur Anzeige an den Details eines verknüpften Artikels'
+    PRODUCTHINTSHORT: 'Artikel-Hinweis'
+    SHIPMENTINFO: 'Versandinformationen'
+    SHOWSHIPMENTINFOONPRODUCTDETAIL: 'Versandinformationen an den Details eines verknüpften Artikels anzeigen?'
+    TITLE: 'Name'
+  SilvercartFreightgroupAdmin:
+    MENUTITLE: "Frachtgruppen"
+  SilvercartFreightgroupLanguage:
+    PLURALNAME: 'Übersetzungen'
+    SINGULARNAME: 'Übersetzung'

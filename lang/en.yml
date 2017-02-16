@@ -1,0 +1,17 @@
+en:
+  SilvercartFreightgroup:
+    PLURALNAME: 'Freightgroups'
+    SINGULARNAME: 'Freightgroup'
+    DESCRIPTION: 'Description'
+    ISDEFAULT: 'Is default'
+    PRIORITY: 'Priority'
+    PRODUCTHINT: 'Hint to display inside a related products detail data'
+    PRODUCTHINTSHORT: 'Product hint'
+    SHIPMENTINFO: 'Shipment information'
+    SHOWSHIPMENTINFOONPRODUCTDETAIL: 'Show shipment information on a products detail page?'
+    TITLE: 'Name'
+  SilvercartFreightgroupAdmin:
+    MENUTITLE: "Freightgroups"
+  SilvercartFreightgroupLanguage:
+    PLURALNAME: 'Translations'
+    SINGULARNAME: 'Translation'

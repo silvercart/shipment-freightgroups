@@ -1,0 +1,17 @@
+ru:
+  SilvercartFreightgroup:
+    PLURALNAME: 'Группы груза'
+    SINGULARNAME: 'Группа груза'
+    DESCRIPTION: 'Описание'
+    ISDEFAULT: 'стандарт'
+    PRIORITY: 'Приоритет'
+    PRODUCTHINT: 'Показать детальную информацию по артикулу'
+    PRODUCTHINTSHORT: 'замечание по артикулу'
+    SHIPMENTINFO: 'Информация по доставке'
+    SHOWSHIPMENTINFOONPRODUCTDETAIL: 'Показать информацию по доставке товара?'
+    TITLE: 'Имя'
+  SilvercartFreightgroupAdmin:
+    MENUTITLE: "Группы груза"
+  SilvercartFreightgroupLanguage:
+    PLURALNAME: 'переводы'
+    SINGULARNAME: 'перевод'
