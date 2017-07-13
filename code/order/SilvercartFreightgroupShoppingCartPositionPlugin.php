@@ -42,14 +42,14 @@ class SilvercartFreightgroupShoppingCartPositionPlugin extends DataExtension {
      * @return string
      *
      * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 19.04.2012
+     * @since 12.07.2017
      */
     public function pluginAddToTitle($callingObject) {
         $addToTitle     = '';
         $productHint    = trim($callingObject->SilvercartProduct()->SilvercartFreightgroup()->ProductHint);
         if (!empty($productHint)) {
             $addToTitle = sprintf(
-                    '<p class="box warning">%s</div>',
+                    '<div class="alert alert-info margin-top">%s</div>',
                     $productHint
             );
         }
